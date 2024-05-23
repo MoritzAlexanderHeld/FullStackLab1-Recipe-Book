@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="cheese-icon.svg" type="image/svg+xml">
+  <title>Cooking for dummies</title>
+
+  <style>
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+    .recipe-form-container {
+      display: flex;
+      flex-wrap: wrap; /*This allows the title, ingredients and instructions to go over multiple lines*/
+      justify-content: space-between;
+      flex: 1 1 80%;
+    }
+
+  </style>
+</head>
+<body>
+    <h1>Recipes</h1>
+    <h2>Enter your new recipe here:</h2>
+    <div class="recipe-form-container">
+      <form id="recipeForm">
+        <input type="text" id="title" placeholder="Title" required><br>
+        <input type="text" id="ingredients" placeholder="Ingredients (comma-separated)" required><br>
+        <textarea id="instructions" placeholder="Instructions" required></textarea><br> <!--I wanted to make sure you could see your whole text and use multiple lines.-->
+        <input type="number" id="cookingTime" placeholder="Cooking Time (in minutes)" required><br>
+        <button type="submit">Add Recipe</button>
+      </form>
+    </div>
+    <hr>
+    <div class="recipe-image">
+      <img src="cooking.jpg" alt="Ooops.. This image got lost!">
+    </div>
+    <hr>
+  <table id="recipesTable">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Ingredients</th>
+        <th>Instructions</th>
+        <th>Cooking Time</th>
+        <th>Actions</th> <!--This includes the Edit and Delete buttons-->
+      </tr>
+    </thead>
+    <tbody>
+        <h2>Your saved recipes:</h2>
+      <!-- Recipes will be inserted here -->
+    </tbody>
+  </table>
+
+  <script src="app.js"></script>
+  
+</body>
+</html>
