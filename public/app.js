@@ -33,9 +33,49 @@ function displayRecipes(recipes) {
     // Delete button
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
-    deleteButton.addEventListener('click', () => deleteRecipe(recipe._id));
+    // Instead of calling the deleteRecipe function directly we now call the modal 
+    // and the "confirmDelete" option calls the deleteRecipe function
+    deleteButton.addEventListener('click', () => showDeleteModal(recipe._id));
     actionsCell.appendChild(deleteButton);
     });
+}
+
+// The modal consists of 3 parts, the window, the confirmation button and cancel button.
+// One button would be enough, because the cancel button, just as clicking outside the modal
+// just closes the modal. But that would potentially be confusing.
+function showDeleteModal(id) {
+    const modal = document.getElementById('deleteModal');
+    modal.style.display = "block";
+
+    const confirmDeleteButton = document.getElementById('confirmDelete');
+    confirmDeleteButton.onclick = async function () {
+        await deleteRecipe(id); // Here we call the deleteRecipe function now
+        modal.style.display = "none"; // This closes the modal after clicking an option
+    };
+
+    const cancelDeleteButton = document.getElementById('cancelDelete');
+    cancelDeleteButton.onclick = function () {
+        modal.style.display = "none";
+    };
+
+    // This is optional, but it closes the modal when clicking outside of it, which is just nicer.
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
+}
+
+// Function to delete a recipe stays unchanged, just gets called differently
+async function deleteRecipe(id) {
+    try {
+        await fetch(`/api/recipes/${id}`, {
+            method: 'DELETE',
+        });
+        await fetchRecipes();
+    } catch (error) {
+        console.error('Error:', error);
+    }
 }
 
 // Function to edit a recipe
@@ -46,18 +86,6 @@ function editRecipe(recipe) {
     document.getElementById('cookingTime').value = recipe.cookingTime;
     document.getElementById('recipeForm').setAttribute('data-id', recipe._id);
     document.getElementById('recipeForm').querySelector('button').textContent = 'Update Recipe';
-}
-
-// Function to delete a recipe
-async function deleteRecipe(id) {
-    try {
-    await fetch(`/api/recipes/${id}`, {
-        method: 'DELETE',
-    });
-    await fetchRecipes();
-    } catch (error) {
-    console.error('Error:', error);
-    }
 }
 
 // This method is used to add OR edit a recipe. How it is handled depends on wether there is data already or not.

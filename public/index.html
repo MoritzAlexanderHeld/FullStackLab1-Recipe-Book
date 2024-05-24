@@ -21,7 +21,25 @@
       justify-content: space-between;
       flex: 1 1 80%;
     }
-
+    /* Modal styles */
+    .modal {
+      display: none; /*Makes the modal invisible, unless an action is triggered*/
+      position: fixed; /*This and below positions the modal*/
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%; 
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);/*Makes the background slightly darker when the modal opens*/ 
+      padding-top: 60px;
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto; 
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+    }
   </style>
 </head>
 <body>
@@ -56,6 +74,15 @@
       <!-- Recipes will be inserted here -->
     </tbody>
   </table>
+
+  <!-- Modal for delete confirmation -->
+  <div id="deleteModal" class="modal">
+    <div class="modal-content">
+      <p>Do you really want to delete your recipe?</p>
+      <button id="confirmDelete">Yes, destroy!</button>
+      <button id="cancelDelete">Noooo, I want to keep it.</button>
+    </div>
+  </div>
 
   <script src="app.js"></script>
   
